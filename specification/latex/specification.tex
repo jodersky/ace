@@ -1,0 +1,103 @@
+% ** General Options ***************************************************
+
+	\documentclass[10pt,a4paper]{article}
+
+	% ** input encoding **
+	\usepackage[utf8]{inputenc} % Linux / Windows
+	%\usepackage[applemac]{inputenc} % Mac
+
+	% ** language **
+	%\usepackage[french]{babel} % french
+	%\usepackage[french, english]{babel} % bilingual, french / english
+	\usepackage[english]{babel} % english
+	
+	% ** illustrations **
+	\usepackage{graphicx}
+	\usepackage{subfigure}
+
+	% ** tables **
+	\usepackage{rotating}
+	\usepackage{ctable}
+	\usepackage{multirow}
+	\usepackage{makecell}
+	
+	% ** equations **
+	\usepackage{amsmath,amssymb,amsfonts}
+	\newcommand{\be} {\begin{equation}}
+	\newcommand{\ee} {\end{equation}}
+	\newcommand{\ben} {\begin{equation*}}
+	\newcommand{\een} {\end{equation*}}
+	\newcommand{\st} {\ensuremath{\sigma}}
+	\newcommand{\dfm} {\ensuremath{\varepsilon}}
+	\newcommand{\delx} {\ensuremath{\Delta x}}
+	\newcommand{\dely} {\ensuremath{\Delta y}}
+	\newcommand{\delz} {\ensuremath{\Delta z}}
+	\renewcommand{\deg} {\ensuremath{^{\circ}}}
+	\providecommand{\abs}[1]{\ensuremath{\left|#1\right|}}
+	\providecommand{\re}[1]{\ensuremath{\frac{\Delta #1}{#1}}}
+	\providecommand{\norm}[1]{\ensuremath{\lVert#1\rVert}}
+	\renewcommand{\vec}[1]{\ensuremath{\boldsymbol{#1}}}
+	\providecommand{\unit}[1]{\ensuremath{\mathrm{#1}}}
+	\providecommand{\E}[1]{\ensuremath{\cdot 10^{#1}}}
+	\providecommand{\tp}[1]{\ensuremath{10^{#1}}}
+	\providecommand{\ddif}{\ensuremath{\mathrm{d}}}
+	
+	% ** links **
+	\usepackage[colorlinks,bookmarks=false,linkcolor=blue,urlcolor=blue]{hyperref}
+	\newcommand{\mail}[1]{{\href{mailto:#1}{#1}}}
+	\newcommand{\ftplink}[1]{{\href{ftp://#1}{#1}}}
+	
+
+	% ** comments **
+	\newcommand{\comment}[1]{{}} % multi-line comment
+	
+	% ** layout **
+	\setlength{\textheight}{235mm}
+	\setlength{\topmargin}{-1.2cm}
+	%\setlength{\footskip}{5mm}
+	\setlength{\textwidth}{15cm}
+	\setlength{\oddsidemargin}{0.56cm}
+	\setlength{\evensidemargin}{0.56cm}
+
+\newcommand{\iw}{7.3cm}
+
+
+% ** Title, author *****************************************************
+\title{A Reactive Secure Serial Protocol}
+\date{\today}
+\author{Jakob Odersky\\{\small \mail{jodersky@gmail.com}}}
+	    
+\setcounter{tocdepth}{2}
+
+% ** Document **********************************************************
+\begin{document}
+
+\maketitle
+\tableofcontents
+\pagestyle{plain}
+\newpage
+
+\begin{figure}
+\begin{centering}
+
+\begin{tabular}{|c|c|c|c|}\hline
+Header & Packet & Checksum & Trailer \\ \hline
+0x02 & & & 0x03
+\end{tabular}
+
+
+
+
+\end{centering}
+\caption{A frame in RSSP}
+\end{figure}
+
+
+
+% \newpage
+% \appendix
+% \input{appendix.tex}
+
+%\bibliographystyle{ieeetr}
+%\bibliography{bibliography}
+\end{document}
