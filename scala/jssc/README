@@ -1,0 +1,2 @@
+This implementation uses ACE over jSSC (java-simple-serial-connector) to provide access to a physical serial port.
+See http://code.google.com/p/java-simple-serial-connector/ for information about jSSC.
