@@ -1,4 +1,4 @@
-package com.github.jodersky.ace.protocol
+package com.github.jodersky.ace
 
 import scala.concurrent.Future
 
