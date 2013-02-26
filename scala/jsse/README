@@ -1,0 +1,1 @@
+This implementation uses ACE over jsse to provide access to a physical serial port.
