@@ -3,7 +3,6 @@ package com.github.jodersky.ace.protocol
 import scala.concurrent.Future
 
 /** Represents a layer in a reactive protocol.
- * 
  *  @tparam L data type this layer receives from or writes to a lower layer
  *  @tparam T data type this layer sends to a higher layer or receives from a higher */
 trait ReactiveLayer[L, T] {
