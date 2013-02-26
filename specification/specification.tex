@@ -122,7 +122,7 @@ The values 002 and 003 are special bytes and therefore have to be escaped. Consi
 \begin{verbatim} 002 001 108 003 002 111 003 003 102 101 016 \end{verbatim}
 
 \section{Automatic Repeat Request (ARQ)}
-To remedy the loss of invalid frames, ACE uses a kind of stop-and-wait ARQ. After sending a frame, the sender waits for an acknowledgement of the receiver before transmitting a next frame. If no acknowledgement is received in a timeout delay, the message is retransmitted. If after retransmitting the message several times no acknowledgement has been received, the message is considered to have been lost and an error is generated at the sender side. Furthermore, if the sender whilst waiting for an acknowledgement, receives an acknowledgement for a different frame other than he had sent or receives a new data frame, the sent frame is considered to be lost and an error is generated on the sender side. Only if the correct acknowledgement is received the message may be considered successfully sent and an action may be taken.
+To remedy the loss of invalid frames, ACE uses a kind of stop-and-wait ARQ. After sending a frame, the sender waits for an acknowledgement of the receiver before transmitting a next frame. If no acknowledgement is received in a timeout delay, the message is retransmitted. If after retransmitting the message several times no acknowledgement has been received, the message is considered to have been lost and an error is generated at the sender side. Only if the correct acknowledgement is received the message may be considered successfully sent and an action may be taken.
 
 On the receiver side, if a frame is received, an acknowledgement to that frame is sent back and application specific action (to the message) is taken. If the same frame is received following the acknowledgement, it is considered that the sender did not receive the acknowledgement and the acknowledgement is retransmitted, this time without taking application specific action.
 
@@ -179,8 +179,6 @@ void receive(uint size, uint8_t* data) {
     
     if (cmd == ACK && seq == last_sent_seq) { // the correct ack was returned
       application_specific_action_send_success();
-    } else { // wrong ack or data received
-      error_bad_acknowledgement();
     }
   }
 }

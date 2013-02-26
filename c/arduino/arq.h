@@ -15,7 +15,6 @@ typedef enum {
   RECEIVED = 0, //mesage received (received message given in event handler)
   SEND_SUCCESS = 1, //mesage was successfully sent (message sent given in event handler)
   NO_ACK = 3, //no ack was received for given message (message sent given in event handler)
-  BAD_ACK = 4, //bad ack or data was received for given message (message sent given in event handler)
   SIZE_ERROR = 5, //the message being sent is too large (message trying to be sent given in event handler)
   BUSY = 6 //a message has already been sent and an ack is awaited (message trying to be sent given in event handler)
 } message_event;

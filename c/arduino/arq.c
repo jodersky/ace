@@ -58,8 +58,6 @@ static void process_event(arq* a, arq_event event, int16_t data_size, uint8_t* d
       
       if (cmd == ACK && seq == a->last_sent_buffer[SEQ_INDEX]) {
         a->event_handler(SEND_SUCCESS, a->last_sent_size - MESSAGE_OFFSET, &(a->last_sent_buffer[MESSAGE_OFFSET]));
-      } else {
-        a->event_handler(BAD_ACK, a->last_sent_size - MESSAGE_OFFSET, &(a->last_sent_buffer[MESSAGE_OFFSET]));
       }
     }
     
