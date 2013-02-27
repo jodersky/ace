@@ -1,4 +1,4 @@
-package com.github.jodersky.ace
+package com.github.jodersky.ace.protocol
 
 import scala.concurrent.Future
 
@@ -15,14 +15,14 @@ trait ReactiveLayer[L, T] {
     case None => throw new UnsupportedOperationException("Higher layer doesn't exist.")
   }
   
-  /** Writes data to a lower layer. */
-  protected def writeToLower(l: L): Future[L] = lowerLayer match {
-    case Some(lower) => lower.write(l)
+  /** Sends data to a lower layer. */
+  protected def sendToLower(l: L): Future[L] = lowerLayer match {
+    case Some(lower) => lower.send(l)
     case None => Future.failed(new UnsupportedOperationException("Lower layer doesn't exist."))
   }
   
   /** Connects this layer with a higher layer, effectively linking calls
-   *  `notifyHigher` to `higher.receive` and `higher.writeToLower` to `write`. */
+   *  `notifyHigher` to `higher.receive` and `higher.sendToLower` to `send`. */
   def connect[A](higher: ReactiveLayer[T, A]) = {
     this.higherLayer = Some(higher)
     higher.lowerLayer = Some(this)
@@ -30,9 +30,9 @@ trait ReactiveLayer[L, T] {
   }
   
   /** Called from lower layer. */
-  def receive(data: L): Unit
+  protected def receive(data: L): Unit
   
-  /** Write data to this layer.
-   *  @return a future value containing the data written, or an error */
-  def write(data: T): Future[T]
+  /** Send data to this layer.
+   *  @return a future value containing the data sent, or an error */
+  def send(data: T): Future[T]
 }

@@ -1,4 +1,4 @@
-package com.github.jodersky.ace
+package com.github.jodersky.ace.protocol
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,7 +19,7 @@ class Arq(timeout: Int, maxResends: Int = 5, maxMessageBuffer: Int = 10) extends
   // received message sequences
   private val receivedSequences = Queue[Int]()
 
-  def receive(frameData: Seq[Int]) = {
+  protected def receive(frameData: Seq[Int]) = {
     val sequence = frameData(SequenceOffset)
     val command = frameData(CommandOffset)
     val message = frameData.drop(MessageOffset)
@@ -33,7 +33,7 @@ class Arq(timeout: Int, maxResends: Int = 5, maxMessageBuffer: Int = 10) extends
       }
 
       case Data => {
-        writeToLower(ack(sequence))
+        sendToLower(ack(sequence))
 
         if (!(receivedSequences contains sequence)) {
           if (receivedSequences.size > maxMessageBuffer) receivedSequences.dequeue
@@ -45,14 +45,14 @@ class Arq(timeout: Int, maxResends: Int = 5, maxMessageBuffer: Int = 10) extends
     }
   }
 
-  def write(message: Seq[Int]) = {
+  def send(message: Seq[Int]) = {
     val promise = Promise[Seq[Int]]
     val sequence = nextSequence()
     
     val frameData = Seq(sequence, Data) ++ message 
 
     def send(n: Int): Future[Seq[Int]] =
-      writeToLower(frameData) map { frameData =>
+      sendToLower(frameData) map { frameData =>
         Await.result(promise.future, timeout.milliseconds)
       } recoverWith {
         case t: TimeoutException if (n < maxResends) => send(n + 1)

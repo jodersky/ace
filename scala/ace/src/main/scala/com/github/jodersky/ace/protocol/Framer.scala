@@ -1,4 +1,4 @@
-package com.github.jodersky.ace
+package com.github.jodersky.ace.protocol
 
 import scala.collection.mutable.ArrayBuffer
 import scala.concurrent.Future
@@ -14,9 +14,9 @@ class Framer extends ReactiveLayer[Seq[Int], Seq[Int]] {
   private var state: State = Waiting
   private val buffer = new ArrayBuffer[Int]
 
-  def receive(bytes: Seq[Int]) = bytes foreach receive
+  protected def receive(bytes: Seq[Int]) = bytes foreach receive
   
-  def receive(byte: Int): Unit = {
+  protected def receive(byte: Int): Unit = {
 
     state match {
       case Escaping => {
@@ -40,7 +40,7 @@ class Framer extends ReactiveLayer[Seq[Int], Seq[Int]] {
     }
   }
 
-  def write(data: Seq[Int]): Future[Seq[Int]] = {
+  def send(data: Seq[Int]): Future[Seq[Int]] = {
     val buffer = new ArrayBuffer[Int]
     
     buffer += Start    
@@ -62,7 +62,7 @@ class Framer extends ReactiveLayer[Seq[Int], Seq[Int]] {
         case _ => buffer += c
       }
     buffer += Stop
-    writeToLower(buffer) map (_ => data)
+    sendToLower(buffer) map (_ => data)
   }
 }
 
@@ -72,9 +72,9 @@ object Framer {
   case object Receiving extends State
   case object Escaping extends State
 
-  final val Escape = 0x02
-  final val Start = 0x03
-  final val Stop = 0x10
+  final val Escape = 0x10
+  final val Start = 0x02
+  final val Stop = 0x03
 
   def checksum(unsignedData: Seq[Int]) = {
     unsignedData.fold(0)(_ ^ _)
