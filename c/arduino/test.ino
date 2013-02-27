@@ -13,18 +13,19 @@ void ace_event(message_event e, int16_t size, const uint8_t* const message) {
     digitalWrite(ERR_PIN, LOW);
     lcd.clear();
     for(int i = 0; i < size; ++i) {
-      lcd.write(message[i]);
+      lcd.print(message[i]);
     } 
   }
   else {
     digitalWrite(ERR_PIN, HIGH);
     lcd.clear();
+    lcd.print("txerr: ");
     lcd.print(e);
   }
 }
 
 void setup() {
-  init_ace(115200, 20);
+  init_ace(9600, 200);
   lcd.begin(16,2);
   lcd.clear();
   lcd.print("ready");
@@ -33,12 +34,7 @@ void setup() {
 
 uint8_t i = 0;
 void loop() {
-  
-  lcd.clear();
-  lcd.print("|");
-
-  
   delay(1000);
+  i += 1;
   ace_send0(1, &i);
-  delay(1000);
 }

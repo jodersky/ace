@@ -101,8 +101,8 @@ An invalid frame should be ignored by the receiver and no action taken.
  Structure & Header & Data & \multicolumn{2}{|c|}{Trailer} \\ \hline \hline
  Detailed structure & start & data & checksum & stop \\ \hline
  Length (bytes) & 1 & any (within limits of implementation) & 1 & 1 \\ \hline
- Hexadecimal values & 0x02 & & XOR  of all data bytes & 0x10 \\ \hline
- \multicolumn{5}{l}{Escape byte value: 0x03.} \\
+ Hexadecimal values & 0x02 & & XOR  of all data bytes & 0x03 \\ \hline
+ \multicolumn{5}{l}{Escape byte value: 0x10.} \\
  \end{tabular}
  
  \caption{A data frame in ACE.}
@@ -113,13 +113,13 @@ An invalid frame should be ignored by the receiver and no action taken.
 \subsection{Example 1}
 As a first example, consider the message ``hello'' encoded in ASCII. Equivalently, this message may be represented as a sequence of bytes (in decimal representation): \begin{verbatim} 104 101 108 108 111 \end{verbatim}
 The checksum of this message is 98, therefore the corresponding data frame is:
-\begin{verbatim} 002 104 101 108 108 111 098 016 \end{verbatim}
+\begin{verbatim} 002 104 101 108 108 111 098 003 \end{verbatim}
 
 \subsection{Example 2}
 As a second example, consider the byte sequence:
-\begin{verbatim} 001 108 002 111 003 102 \end{verbatim}
-The values 002 and 003 are special bytes and therefore have to be escaped. Considering that the checksum is 101, the resulting frame is given by:
-\begin{verbatim} 002 001 108 003 002 111 003 003 102 101 016 \end{verbatim}
+\begin{verbatim} 001 108 002 111 016 102 \end{verbatim}
+The values 002 and 016 are special bytes and therefore have to be escaped. Considering that the checksum is 118, the resulting frame is given by:
+\begin{verbatim} 002 001 108 016 002 111 016 016 102 118 003 \end{verbatim}
 
 \section{Automatic Repeat Request (ARQ)}
 To remedy the loss of invalid frames, ACE uses a kind of stop-and-wait ARQ. After sending a frame, the sender waits for an acknowledgement of the receiver before transmitting a next frame. If no acknowledgement is received in a timeout delay, the message is retransmitted. If after retransmitting the message several times no acknowledgement has been received, the message is considered to have been lost and an error is generated at the sender side. Only if the correct acknowledgement is received the message may be considered successfully sent and an action may be taken.

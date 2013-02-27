@@ -9,9 +9,9 @@ extern "C" {
 #include <inttypes.h>
 
 #define MAX_FRAME_SIZE 128
-#define FRAME_ESCAPE 0x02
-#define FRAME_START 0x03
-#define FRAME_STOP 0x10
+#define FRAME_ESCAPE 0x10
+#define FRAME_START 0x02
+#define FRAME_STOP 0x03
 
 typedef enum {
   WAITING,
