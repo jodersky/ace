@@ -1,0 +1,2 @@
+This implementation uses ACE over RxTx to provide access to a physical serial port.
+See http://rxtx.qbang.org for information about RxTx.
