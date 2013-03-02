@@ -1,4 +1,4 @@
-package com.github.jodersky.ace.protocol
+package com.github.jodersky.ace
 
 class SimpleActionLayer[A](action: A => Unit) extends ReactiveLayer[A, A] {
   protected def receive(data: A) = action(data)

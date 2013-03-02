@@ -1,4 +1,4 @@
-package com.github.jodersky.ace.protocol
+package com.github.jodersky.ace
 
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
