@@ -1,5 +1,7 @@
-package com.github.jodersky.ace
+package com.github.jodersky.ace.jssc.test
 
+import com.github.jodersky.ace.Arq;
+import com.github.jodersky.ace.Framer;
 import com.github.jodersky.ace._
 import com.github.jodersky.ace.jssc._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -7,8 +9,6 @@ import _root_.jssc.SerialPort
 
 
 object Main {
-  
-  
   
   def main(args: Array[String]): Unit = {
     val serial = new Serial("/dev/ttyACM0")
@@ -21,10 +21,8 @@ object Main {
     
     while (true) {
       app.send(Console.readLine.getBytes().map(_.toInt)).map(sent => Console.println("> " + sent))
-      
     }
     
   }
   
-
 }
