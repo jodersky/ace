@@ -9,6 +9,8 @@ import scala.collection.mutable.Queue
 import scala.util.Success
 
 class Arq(timeout: Int, maxResends: Int = 5, maxMessageBuffer: Int = 10) extends ReactiveLayer[Seq[Int], Seq[Int]] {
+  require(maxMessageBuffer < 256, "max amount of messages must fit into a byte")
+  
   import Arq._
 
   case class OpenMessage(data: Seq[Int], promise: Promise[Seq[Int]])
