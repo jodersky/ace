@@ -22,7 +22,7 @@ static void init_s0(uint32_t baud) {
   UBRR0H = baud_setting >> 8;
   UBRR0L = baud_setting;
   UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);   // defaults to 8-bit, no parity, 1 stop bit
-  UCSR0B &= ~(1 << UDRIE0) | (1 << TXEN0) | (1 << RXCIE0);
+  UCSR0B &= ~(1 << UDRIE0);
 }
 
 static void send_to_s0(uint8_t byte) {
